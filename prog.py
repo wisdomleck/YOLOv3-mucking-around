@@ -7,12 +7,14 @@ net = cv2.dnn.readNet('C:/Users/alecy/OneDrive/Desktop/randpython/yolov3.weights
 
 # get list of classes names
 classes = []
-with open('C:/Users/alecy/OneDrive/Desktop/randpython/coco.txt', 'r') as f:
+with open('C:/Users/alecy/OneDrive/Desktop/randpython/names.txt', 'r') as f:
     classes = f.read().splitlines()
 
 # Read in an image to process
-img = cv2.imread('C:/Users/alecy/OneDrive/Desktop/randpython/images/potplants.jpg')
+img = cv2.imread('C:/Users/alecy/OneDrive/Desktop/randpython/images/unimelb.jpg')
 height, width, _ = img.shape
+
+print(height, width)
 
 # Create a blob object, that is scaled correctly as input for the model
 blob = cv2.dnn.blobFromImage(img, 1/255, (416, 416), (0, 0, 0), swapRB = True, crop = False)
@@ -88,7 +90,8 @@ if len(indexes.flatten()) > 0:
         cv2.rectangle(img, (x,y), (x+w, y+h), color, 2) # last param is thickness of box
         cv2.putText(img, label + " " + confidence, (x, y - 5), font, font_size, (255, 255 ,255), font_thick)
 
-
+# Can resize the image if its too small or big
+img = cv2.resize(img, (1800, 1000))
 
 cv2.imshow('Image', img)
 cv2.waitKey(0)
